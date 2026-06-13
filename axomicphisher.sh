@@ -1,6 +1,7 @@
+#!/usr/bin/env bash
 source core.sh
+source tunnel.sh 
 source site.sh
-source tunnel.sh
 source menu.sh
 source setup.sh
 trap 'killpid' INT TERM
