@@ -52,17 +52,30 @@ startcloudflared() {
     cd .sites/"$site" || exit
     php -S 127.0.0.1:"$port" >/dev/null 2>&1 &
     phppid=$!
+    sleep 2
     cd ../../
+
     printf "${green}[i] ${white}starting cloudflared tunnel ...${reset}\n"
+    rm -f .server/log
     ./tunneler/cloudflared tunnel --url http://127.0.0.1:"$port" > .server/log 2>&1 &
     cfpid=$!
-    sleep 8
-    tunnelurl=$(grep -o 'https://[-a-zA-Z0-9.]*trycloudflare.com' .server/log | head -1)
-    if [[ -z "$tunnelurl" ]]; then
-        printf "${red}[!] ${white}failed to start cloudflared tunnel.${reset}\n"
-        exit 1
-    fi
-    capture
+
+    printf "${green}[i] ${white}waiting for tunnel url ...${reset}\n"
+    local max_attempts=12
+    local attempt=0
+    while [[ $attempt -lt $max_attempts ]]; do
+        tunnelurl=$(grep -o 'https://[-a-zA-Z0-9.]*trycloudflare.com' .server/log | head -1)
+        if [[ -n "$tunnelurl" ]]; then
+            printf "${green}[+] ${white}cloudflared url : ${blue}$tunnelurl${reset}\n"
+            capture
+            return
+        fi
+        sleep 1
+        ((attempt++))
+    done
+
+    printf "${red}[!] ${white}failed to start cloudflared tunnel. check .server/log${reset}\n"
+    exit 1
 }
 
 startlocalxpose() {
