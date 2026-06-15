@@ -1,51 +1,17 @@
 
-<div align="center">
 
-```
+─█▀▀█ ▀▄░▄▀ ░█▀▀▀█ ░█▀▄▀█ 　 ░█▀▀█ ░█─░█ ▀█▀ ░█▀▀▀█ ░█─░█ ░█▀▀▀ ░█▀▀█ 
+░█▄▄█ ─░█── ░█──░█ ░█░█░█ 　 ░█▄▄█ ░█▀▀█ ░█─ ─▀▀▀▄▄ ░█▀▀█ ░█▀▀▀ ░█▄▄▀ 
+░█─░█ ▄▀░▀▄ ░█▄▄▄█ ░█──░█ 　 ░█─── ░█─░█ ▄█▄ ░█▄▄▄█ ░█─░█ ░█▄▄▄ ░█─░█
 
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║    █████╗ ██╗  ██╗ ██████╗ ███╗   ███╗██╗ ██████╗           ║
-║   ██╔══██╗╚██╗██╔╝██╔═══██╗████╗ ████║██║██╔════╝           ║
-║   ███████║ ╚███╔╝ ██║   ██║██╔████╔██║██║██║                 ║
-║   ██╔══██║ ██╔██╗ ██║   ██║██║╚██╔╝██║██║██║                 ║
-║   ██║  ██║██╔╝ ██╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╗           ║
-║   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝           ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
+> phishing toolkit
 
-```
-```
+─────────────────────────────────────────────────────────────
+  57 platforms  |  4 tunnel methods  |  cross platform
+  custom subdomains  |  real-time capture  |  modular
+─────────────────────────────────────────────────────────────
 
-```
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║    ██████╗ ██╗  ██╗██╗███████╗██╗  ██╗███████╗██████╗      ║
-║    ██╔══██╗██║  ██║██║██╔════╝██║  ██║██╔════╝██╔══██╗     ║
-║    ██████╔╝███████║██║███████╗███████║█████╗  ██████╔╝     ║
-║    ██╔═══╝ ██╔══██║██║╚════██║██╔══██║██╔══╝  ██╔══██╗     ║
-║    ██║     ██║  ██║██║███████║██║  ██║███████╗██║  ██║     ║
-║    ╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝     ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
-```
-
-🔴 AXOMIC PHISHER
-
-phishing toolkit
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  57 platforms  |  4 tunnel methods  |  cross platform      │
-│  custom subdomains  |  real-time capture  |  modular       │
-└─────────────────────────────────────────────────────────────┘
-```
-
-</div>
-
----
-
- INSTALL
+## INSTALL
 
 ```
 git clone https://github.com/axomtools/axomphisher.git
@@ -54,47 +20,33 @@ chmod +x axomphisher.sh
 ./axomphisher.sh
 ```
 
----
+OR this short installation :
 
-short :
 ```
 git clone https://github.com/axomtools/axomphisher.git && cd axomphisher && chmod +x axomphisher.sh && ./axomphisher.sh
 ```
 
----
+usage explanation :
 
- USAGE explanation
-
-```
 select site → choose tunnel → send link → capture credentials
-```
 
 stop: CTRL + C
 
----
+🌐 TUNNELS
 
- ## TUNNELS
+tunnel        | public url        | custom name
+─────────────────────────────────────────────────────────────
+localhost     | no                | no
+cloudflared   | yes (random)      | no
+localxpose    | yes               | yes
+serveo        | yes               | yes
 
-tunnel public url custom name
-localhost ❌ ❌
-cloudflared ✅ random ❌
-localxpose ✅ ✅
-serveo ✅ ✅
 
----
+USE RESPONSIBLY, 
+I AM NOT RESPONSIBLE FOR YOUR USE TO THIS TOOL
 
-<div align="center">
+─────────────────────────────────────────────────────────────
+made by axom
+github.com/axomtools
+─────────────────────────────────────────────────────────────
 
-```
-╔══════════════════════════════════════════════════════════════╗
-║                                                                         ║
-║                         USE RESPONSIBLY                                 ║
-║                                                                         ║
-║             USE WITH FULL RESPONSIBILITY, IM NOT RESPONSIBLE            ║
-║                                                                         ║
-╚══════════════════════════════════════════════════════════════╝
-```
-
-made by axom | github
-
-</div>
