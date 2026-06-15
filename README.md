@@ -16,14 +16,14 @@
 ```
 git clone https://github.com/axomtools/axomphisher.git
 cd axomphisher
-chmod +x axomphisher.sh
-./axomphisher.sh
+chmod +x axomicphisher.sh
+./axomicphisher.sh
 ```
 
 OR this short installation :
 
 ```
-git clone https://github.com/axomtools/axomphisher.git && cd axomphisher && chmod +x axomphisher.sh && ./axomphisher.sh
+git clone https://github.com/axomtools/axomphisher.git && cd axomphisher && chmod +x axomicphisher.sh && ./axomicphisher.sh
 ```
 
 usage explanation :
